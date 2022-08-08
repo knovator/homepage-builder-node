@@ -1,8 +1,8 @@
 {
-  "name": "homepage-builder-node",
+  "name": "@knovator/homepage-builder-node",
   "version": "0.1.0",
   "license": "MIT",
-  "author": "chavda-bhavik",
+  "author": "chavda-bhavik (knovator)",
   "main": "dist/index.js",
   "module": "dist/homepage-builder-node.esm.js",
   "typings": "dist/index.d.ts",
@@ -46,5 +46,14 @@
       "path": "dist/homepage-builder-node.esm.js",
       "limit": "10 KB"
     }
-  ]
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^8.0.0",
+    "@tsconfig/recommended": "^1.0.1",
+    "dts-cli": "^1.5.2",
+    "husky": "^8.0.1",
+    "size-limit": "^8.0.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  }
 }
