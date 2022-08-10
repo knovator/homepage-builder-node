@@ -1,6 +1,5 @@
-export const sum = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    console.log('dev only output');
-  }
-  return a + b;
-};
+import WidgetRoutes from './routes/WidgetRoute';
+import TileRoutes from './routes/TileRoute';
+import { Widget, Tile } from './models';
+
+export { WidgetRoutes, TileRoutes, Widget, Tile };
