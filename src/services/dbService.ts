@@ -45,6 +45,20 @@ export async function getAll<T extends EntityType>(
 ): Promise<ReturnDocument[]> {
 	return Modal.find(query, projection, options);
 }
+// list
+export async function list<T extends EntityType>(
+	Modal: Model<T>,
+	where: FilterQuery<T>,
+	options: QueryOptions<T>
+): Promise<ReturnDocument[]> {
+	try {
+		// @ts-ignore
+		let documents = Modal.paginate(where, options);
+		return documents;
+	  } catch (error) {
+		throw new Error((error as Error).message);
+	  }
+}
 // get-one
 export async function getOne<T extends EntityType>(
 	Modal: Model<T>,

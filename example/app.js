@@ -1,10 +1,12 @@
 require('dotenv').config();
 require('./db');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = 8080;
 const { WidgetRoutes, TileRoutes } = require('../.');
 
+app.use(cors());
 app.get('/status', (_req, res) => {
 	res.send('All Okay');
 });

@@ -9,7 +9,11 @@ routes.use(express.json());
 
 // Widget Routes
 // Get all widgets
-routes.get(`/`, validate(widgetValidation.list), widgetController.getWidgets);
+routes.post(
+	`/list`,
+	validate(widgetValidation.list),
+	widgetController.getWidgets
+);
 // Create a widget
 routes.post(
 	`/`,

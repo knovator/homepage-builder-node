@@ -55,4 +55,15 @@ export const update = joi.object<IWidgetSchema>({
 
 export const list = joi.object({
 	search: joi.string().allow('').replace(/\s+/g, '_').optional().default(''),
+	options: joi
+		.object({
+			// sort: joi.alternatives().try(joi.object(), joi.string()).optional(),
+			// populate: joi.array().items().optional(),
+			offset: joi.number().optional(),
+			page: joi.number().optional(),
+			limit: joi.number().optional(),
+			pagination: joi.boolean().default(false),
+		})
+		.default({}),
+	isActive: joi.boolean().optional(),
 });

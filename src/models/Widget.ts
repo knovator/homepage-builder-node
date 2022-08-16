@@ -1,5 +1,6 @@
 import { WidgetType, CardTypes } from '../../types/enums';
 import { Schema, Model, Document, model } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 import { softDeletePlugin } from '../plugins/softDelete';
 
 export interface IWidgetSchema extends Document {
@@ -31,6 +32,7 @@ const WidgetSchema = new Schema<IWidgetSchema>({
 });
 
 WidgetSchema.plugin(softDeletePlugin);
+WidgetSchema.plugin(mongoosePaginate);
 
 const Widget: Model<IWidgetSchema> = model('Widget', WidgetSchema);
 
