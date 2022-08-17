@@ -1,18 +1,30 @@
 import joi from 'joi';
 import { ITileSchema } from '../../models';
+import { TileTypes } from '../../../types/enums';
 
 export const create = joi.object<ITileSchema>({
 	widgetId: joi.string().required(),
 	title: joi.string().required(),
-	alt: joi.string().optional(),
+	altText: joi.string().optional(),
 	link: joi.string().required(),
+	sequence: joi.number().optional(),
+	tileType: joi
+		.string()
+		.valid(...Object.values(TileTypes))
+		.optional()
+		.default(TileTypes.Web),
 });
 
 export const update = joi.object<ITileSchema>({
 	widgetId: joi.string().required(),
 	title: joi.string().required(),
-	alt: joi.string().optional(),
+	altText: joi.string().optional(),
 	link: joi.string().required(),
+	sequence: joi.number().optional(),
+	tileType: joi
+		.string()
+		.valid(...Object.values(TileTypes))
+		.required(),
 });
 
 export const list = joi.object({

@@ -6,7 +6,7 @@ import { softDeletePlugin } from '../plugins/softDelete';
 export interface ITileSchema extends Document {
 	widgetId: typeof Types.ObjectId;
 	title: string;
-	alt: string;
+	altText: string;
 	link: string;
 	imageUrl: string;
 	sequence: Number;
@@ -19,7 +19,7 @@ const TileSchema = new Schema<ITileSchema>({
 		ref: 'Widget',
 	},
 	title: String,
-	alt: String,
+	altText: String,
 	link: String,
 	imageUrl: String,
 	sequence: Number,

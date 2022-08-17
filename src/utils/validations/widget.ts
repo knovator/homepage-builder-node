@@ -51,6 +51,10 @@ export const update = joi.object<IWidgetSchema>({
 	name: joi.string().optional(),
 	webPerRow: joi.number().optional(),
 	mobilePerRow: joi.number().optional(),
+	cardType: joi
+		.string()
+		.valid(...Object.values(CardTypes))
+		.optional(),
 });
 
 export const list = joi.object({
@@ -65,5 +69,4 @@ export const list = joi.object({
 			pagination: joi.boolean().default(false),
 		})
 		.default({}),
-	isActive: joi.boolean().optional(),
 });
