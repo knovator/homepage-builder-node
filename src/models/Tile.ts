@@ -8,9 +8,9 @@ export interface ITileSchema extends Document {
 	title: string;
 	altText: string;
 	link: string;
-	imageUrl: string;
 	sequence: Number;
 	tileType: TileTypes;
+	img: any;
 }
 
 const TileSchema = new Schema<ITileSchema>({
@@ -21,8 +21,8 @@ const TileSchema = new Schema<ITileSchema>({
 	title: String,
 	altText: String,
 	link: String,
-	imageUrl: String,
 	sequence: Number,
+	img: { type: Schema.Types.ObjectId, ref: 'file' },
 	tileType: {
 		type: String,
 		enum: Object.values(TileTypes),

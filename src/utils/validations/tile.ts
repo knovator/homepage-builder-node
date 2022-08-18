@@ -8,6 +8,7 @@ export const create = joi.object<ITileSchema>({
 	altText: joi.string().optional(),
 	link: joi.string().required(),
 	sequence: joi.number().optional(),
+	img: joi.string().optional(),
 	tileType: joi
 		.string()
 		.valid(...Object.values(TileTypes))
@@ -21,6 +22,7 @@ export const update = joi.object<ITileSchema>({
 	altText: joi.string().optional(),
 	link: joi.string().required(),
 	sequence: joi.number().optional(),
+	img: joi.string().optional(),
 	tileType: joi
 		.string()
 		.valid(...Object.values(TileTypes))

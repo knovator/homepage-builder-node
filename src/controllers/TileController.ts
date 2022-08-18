@@ -39,10 +39,18 @@ export const deleteTile = catchAsync(async (req: IRequest, res: IResponse) => {
 
 export const getTiles = catchAsync(async (req: IRequest, res: IResponse) => {
 	let widgetId = req.params.widgetId;
-	const webTiles = await getAll(Tile, { widgetId, tileType: TileTypes.Web });
+	let options = {
+		populate: ['img'],
+	};
+	const webTiles = await getAll(
+		Tile,
+		{ widgetId, tileType: TileTypes.Web },
+		options
+	);
 	const mobileTiles = await getAll(Tile, {
 		widgetId,
 		tileType: TileTypes.Mobile,
+		options,
 	});
 	res.message = req?.i18n?.t('tile.getAll');
 	return successResponse({ web: webTiles, mobile: mobileTiles }, res);
