@@ -43,11 +43,29 @@ export const deleteWidget = catchAsync(
 );
 
 export const getWidgets = catchAsync(async (req: IRequest, res: IResponse) => {
-	let { page, limit, sort, populate } = req.body.options;
+	const search = req.body.search || '';
+	let { page, limit } = req.body.options;
 	let customOptions = {
 		...(page && limit ? { page, limit } : {}),
 	};
-	const notifications = await list(Widget, {}, customOptions);
+	let query = {
+		isDeleted: false,
+		$or: [
+			{
+				name: {
+					$regex: search,
+					$options: 'i',
+				},
+			},
+			{
+				code: {
+					$regex: search,
+					$options: 'i',
+				},
+			},
+		],
+	};
+	const notifications = await list(Widget, query, customOptions);
 	res.message = req?.i18n?.t('widget.getAll');
 	return successResponse(notifications, res);
 });
