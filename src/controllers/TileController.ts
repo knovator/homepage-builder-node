@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { Tile } from './../models';
-import { create, getAll, remove, update } from '../services/dbService';
+import { create, remove, update, getAll } from '../services/dbService';
 import {
 	successResponse,
 	createdDocumentResponse,
@@ -9,6 +9,7 @@ import {
 import { defaults } from '../utils/defaults';
 import { IRequest } from '../../types/IRequest';
 import { IResponse } from '../../types/IResponse';
+import { TileTypes } from '../enums';
 
 const catchAsync = (fn: any) => {
 	return defaults.catchAsync(fn, 'Notification');
@@ -38,7 +39,19 @@ export const deleteTile = catchAsync(async (req: IRequest, res: IResponse) => {
 
 export const getTiles = catchAsync(async (req: IRequest, res: IResponse) => {
 	let widgetId = req.params.widgetId;
-	const tiles = await getAll(Tile, { widgetId });
+	let options = {
+		populate: ['img'],
+	};
+	const webTiles = await getAll(
+		Tile,
+		{ widgetId, tileType: TileTypes.Web },
+		options
+	);
+	const mobileTiles = await getAll(Tile, {
+		widgetId,
+		tileType: TileTypes.Mobile,
+		options,
+	});
 	res.message = req?.i18n?.t('tile.getAll');
-	return successResponse(tiles, res);
+	return successResponse({ web: webTiles, mobile: mobileTiles }, res);
 });

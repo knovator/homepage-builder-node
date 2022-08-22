@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { Widget } from './../models';
-import { create, getAll, remove, update } from '../services/dbService';
+import { create, getAll, remove, update, list } from '../services/dbService';
 import {
 	successResponse,
 	createdDocumentResponse,
@@ -43,7 +43,29 @@ export const deleteWidget = catchAsync(
 );
 
 export const getWidgets = catchAsync(async (req: IRequest, res: IResponse) => {
-	const notifications = await getAll(Widget);
+	const search = req.body.search || '';
+	let { page, limit } = req.body.options;
+	let customOptions = {
+		...(page && limit ? { page, limit } : {}),
+	};
+	let query = {
+		isDeleted: false,
+		$or: [
+			{
+				name: {
+					$regex: search,
+					$options: 'i',
+				},
+			},
+			{
+				code: {
+					$regex: search,
+					$options: 'i',
+				},
+			},
+		],
+	};
+	const notifications = await list(Widget, query, customOptions);
 	res.message = req?.i18n?.t('widget.getAll');
 	return successResponse(notifications, res);
 });

@@ -7,3 +7,8 @@ export enum CardTypes {
 	Fixed = 'Fixed',
 	Slider = 'Slider',
 }
+
+export enum TileTypes {
+	Web = 'Web',
+	Mobile = 'Mobile',
+}
