@@ -1,5 +1,6 @@
 import WidgetRoutes from './routes/WidgetRoute';
 import TileRoutes from './routes/TileRoute';
-import { Widget, Tile } from './models';
+import PageRoutes from './routes/PageRoute';
+import { Widget, Tile, Page } from './models';
 
-export { WidgetRoutes, TileRoutes, Widget, Tile };
+export { WidgetRoutes, TileRoutes, PageRoutes, Widget, Tile, Page };

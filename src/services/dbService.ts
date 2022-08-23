@@ -4,11 +4,13 @@ import {
 	QueryOptions,
 	ProjectionType,
 	Document,
+	HydratedDocument,
 } from 'mongoose';
-import { IWidgetSchema, ITileSchema } from '../models';
+import { IWidgetSchema, ITileSchema, IPageSchema } from '../models';
 
-type EntityType = IWidgetSchema | ITileSchema;
+type EntityType = IWidgetSchema | ITileSchema | IPageSchema;
 type ReturnDocument = EntityType & Document;
+type ReturnModal = HydratedDocument<EntityType>;
 
 // create
 export async function create<T extends EntityType>(
@@ -55,16 +57,16 @@ export async function list<T extends EntityType>(
 		// @ts-ignore
 		let documents = Modal.paginate(where, options);
 		return documents;
-	  } catch (error) {
+	} catch (error) {
 		throw new Error((error as Error).message);
-	  }
+	}
 }
 // get-one
 export async function getOne<T extends EntityType>(
 	Modal: Model<T>,
 	query: FilterQuery<EntityType>
-): Promise<ReturnDocument> {
-	let modalInstance = await Modal.findOne(query);
+): Promise<HydratedDocument<T>> {
+	let modalInstance: HydratedDocument<T> | null = await Modal.findOne(query);
 	if (!modalInstance) throw new Error(`Record not found in ${Modal.name}`);
 
 	return modalInstance;

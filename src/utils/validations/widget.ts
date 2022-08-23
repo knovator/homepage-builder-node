@@ -66,7 +66,7 @@ export const list = joi.object({
 			offset: joi.number().optional(),
 			page: joi.number().optional(),
 			limit: joi.number().optional(),
-			pagination: joi.boolean().default(false),
 		})
 		.default({}),
+	all: joi.boolean().default(false),
 });
