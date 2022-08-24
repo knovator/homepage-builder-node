@@ -26,6 +26,14 @@ routes
 		widgetController.updateWidget
 	)
 	.descriptor('widget.update');
+// Partial Update a widget
+routes
+	.patch(
+		`/:id`,
+		validate(widgetValidation.partialUpdate),
+		widgetController.partialUpdateWidget
+	)
+	.descriptor('widget.update');
 // Delete a widget
 routes
 	.delete(`/:id`, widgetController.deleteWidget)

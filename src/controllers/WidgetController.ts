@@ -72,3 +72,13 @@ export const getWidgets = catchAsync(async (req: IRequest, res: IResponse) => {
 	res.message = req?.i18n?.t('widget.getAll');
 	return successResponse(notifications, res);
 });
+
+export const partialUpdateWidget = catchAsync(
+	async (req: IRequest, res: IResponse) => {
+		const data = req.body;
+		const _id = req.params.id;
+		let updatedNotification = await update(Widget, { _id }, data);
+		res.message = req?.i18n?.t('widget.partialUpdate');
+		return successResponse(updatedNotification, res);
+	}
+);

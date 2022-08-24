@@ -7,6 +7,7 @@ export interface IWidgetSchema extends Document {
 	name: String;
 	code: String;
 	autoPlay: Boolean;
+	isActive: Boolean;
 	selectionTitle: String;
 	webPerRow: Number;
 	mobilePerRow: Number;
@@ -21,6 +22,10 @@ const WidgetSchema = new Schema<IWidgetSchema>({
 	autoPlay: {
 		type: Boolean,
 		default: false,
+	},
+	isActive: {
+		type: Boolean,
+		default: true,
 	},
 	selectionTitle: String,
 	webPerRow: Number,
