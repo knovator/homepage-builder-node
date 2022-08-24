@@ -1,4 +1,4 @@
-import { WidgetType, CardTypes } from '../../types/enums';
+import { WidgetType, SelectionTypes } from '../../types/enums';
 import { Schema, Model, Document, model } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { softDeletePlugin } from '../plugins/softDelete';
@@ -6,27 +6,36 @@ import { softDeletePlugin } from '../plugins/softDelete';
 export interface IWidgetSchema extends Document {
 	name: String;
 	code: String;
+	autoPlay: Boolean;
+	selectionTitle: String;
 	webPerRow: Number;
 	mobilePerRow: Number;
+	tabletPerRow: Number;
 	widgetType: WidgetType;
-	cardType: CardTypes;
+	selectionType: SelectionTypes;
 }
 
 const WidgetSchema = new Schema<IWidgetSchema>({
 	name: String,
 	code: String,
+	autoPlay: {
+		type: Boolean,
+		default: false,
+	},
+	selectionTitle: String,
 	webPerRow: Number,
 	mobilePerRow: Number,
+	tabletPerRow: Number,
 	widgetType: {
 		type: String,
 		enum: Object.values(WidgetType),
 		default: WidgetType.Static,
 		required: true,
 	},
-	cardType: {
+	selectionType: {
 		type: String,
-		enum: Object.values(CardTypes),
-		default: CardTypes.Fixed,
+		enum: Object.values(SelectionTypes),
+		default: SelectionTypes.FixedCard,
 		required: true,
 	},
 });

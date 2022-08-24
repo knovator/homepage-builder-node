@@ -2,12 +2,12 @@ import joi from 'joi';
 import { Widget, IWidgetSchema } from '../../models';
 import { getOne } from '../../services/dbService';
 import { VALIDATION } from '../../constants';
-import { WidgetType, CardTypes } from '../../../types/enums';
+import { WidgetType, SelectionTypes } from '../../../types/enums';
 
 const checkUnique = async (value: string) => {
 	let result;
 	try {
-		// throws error if document not found
+		// throws error if document found
 		result = await getOne(Widget, {
 			code: value,
 		});
@@ -19,41 +19,39 @@ const checkUnique = async (value: string) => {
 
 export const create = joi.object<IWidgetSchema>({
 	name: joi.string().required(),
+	selectionTitle: joi.string().required(),
 	code: joi
 		.string()
 		.uppercase()
 		.replace(/\s+/g, '_')
 		.external(checkUnique)
 		.required(),
-	webPerRow: joi.number().optional(),
-	mobilePerRow: joi.number().optional(),
+	autoPlay: joi.boolean().default(false).optional(),
+	webPerRow: joi.number().allow(null).optional(),
+	mobilePerRow: joi.number().allow(null).optional(),
+	tabletPerRow: joi.number().allow(null).optional(),
 	widgetType: joi
 		.string()
 		.valid(...Object.values(WidgetType))
 		.optional()
 		.default(WidgetType.Static),
-	cardType: joi
+	selectionType: joi
 		.string()
-		.valid(...Object.values(CardTypes))
+		.valid(...Object.values(SelectionTypes))
 		.optional()
-		.default(CardTypes.Fixed),
-	// widgetType: joi
-	// 	.array()
-	// 	.items(joi.string().valid(Object.values(WidgetType)))
-	// 	.optional(),
-	// cardType: joi
-	// 	.array()
-	// 	.items(joi.string().valid(Object.values(CardTypes)))
-	// 	.optional(),
+		.default(SelectionTypes.FixedCard),
 });
 
 export const update = joi.object<IWidgetSchema>({
-	name: joi.string().optional(),
-	webPerRow: joi.number().optional(),
-	mobilePerRow: joi.number().optional(),
-	cardType: joi
+	name: joi.string().required(),
+	selectionTitle: joi.string().required(),
+	webPerRow: joi.number().allow(null).optional(),
+	mobilePerRow: joi.number().allow(null).optional(),
+	tabletPerRow: joi.number().allow(null).optional(),
+	autoPlay: joi.boolean().default(false).optional(),
+	selectionType: joi
 		.string()
-		.valid(...Object.values(CardTypes))
+		.valid(...Object.values(SelectionTypes))
 		.optional(),
 });
 
