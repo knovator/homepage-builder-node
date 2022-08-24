@@ -6,6 +6,7 @@ import { softDeletePlugin } from '../plugins/softDelete';
 export interface IWidgetSchema extends Document {
 	name: String;
 	code: String;
+	autoPlay: Boolean;
 	selectionTitle: String;
 	webPerRow: Number;
 	mobilePerRow: Number;
@@ -17,6 +18,10 @@ export interface IWidgetSchema extends Document {
 const WidgetSchema = new Schema<IWidgetSchema>({
 	name: String,
 	code: String,
+	autoPlay: {
+		type: Boolean,
+		default: false,
+	},
 	selectionTitle: String,
 	webPerRow: Number,
 	mobilePerRow: Number,

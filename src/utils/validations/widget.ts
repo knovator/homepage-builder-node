@@ -26,6 +26,7 @@ export const create = joi.object<IWidgetSchema>({
 		.replace(/\s+/g, '_')
 		.external(checkUnique)
 		.required(),
+	autoPlay: joi.boolean().default(false).optional(),
 	webPerRow: joi.number().allow(null).optional(),
 	mobilePerRow: joi.number().allow(null).optional(),
 	tabletPerRow: joi.number().allow(null).optional(),
@@ -47,6 +48,7 @@ export const update = joi.object<IWidgetSchema>({
 	webPerRow: joi.number().allow(null).optional(),
 	mobilePerRow: joi.number().allow(null).optional(),
 	tabletPerRow: joi.number().allow(null).optional(),
+	autoPlay: joi.boolean().default(false).optional(),
 	selectionType: joi
 		.string()
 		.valid(...Object.values(SelectionTypes))
