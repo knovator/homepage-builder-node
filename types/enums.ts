@@ -3,9 +3,9 @@ export enum WidgetType {
 	Dynamic = 'Dynamic',
 }
 
-export enum CardTypes {
-	Fixed = 'Fixed',
-	Slider = 'Slider',
+export enum SelectionTypes {
+	FixedCard = 'Fixed Card',
+	Carousel = 'Carousel',
 }
 
 export enum TileTypes {
