@@ -8,6 +8,7 @@ export interface IWidgetSchema extends Document {
 	code: String;
 	webPerRow: Number;
 	mobilePerRow: Number;
+	tabletPerRow: Number;
 	widgetType: WidgetType;
 	cardType: CardTypes;
 }
@@ -17,6 +18,7 @@ const WidgetSchema = new Schema<IWidgetSchema>({
 	code: String,
 	webPerRow: Number,
 	mobilePerRow: Number,
+	tabletPerRow: Number,
 	widgetType: {
 		type: String,
 		enum: Object.values(WidgetType),

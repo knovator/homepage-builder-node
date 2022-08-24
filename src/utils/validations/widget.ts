@@ -27,6 +27,7 @@ export const create = joi.object<IWidgetSchema>({
 		.required(),
 	webPerRow: joi.number().optional(),
 	mobilePerRow: joi.number().optional(),
+	tabletPerRow: joi.number().optional(),
 	widgetType: joi
 		.string()
 		.valid(...Object.values(WidgetType))
@@ -51,6 +52,7 @@ export const update = joi.object<IWidgetSchema>({
 	name: joi.string().optional(),
 	webPerRow: joi.number().optional(),
 	mobilePerRow: joi.number().optional(),
+	tabletPerRow: joi.number().optional(),
 	cardType: joi
 		.string()
 		.valid(...Object.values(CardTypes))
