@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { Widget } from './../models';
-import { create, getAll, remove, update, list } from '../services/dbService';
+import { create, remove, update, list } from '../services/dbService';
 import {
 	successResponse,
 	createdDocumentResponse,
@@ -9,6 +9,7 @@ import {
 import { defaults } from '../utils/defaults';
 import { IRequest } from '../../types/IRequest';
 import { IResponse } from '../../types/IResponse';
+import { SelectionTypes, WidgetType } from '../enums';
 
 const catchAsync = (fn: any) => {
 	return defaults.catchAsync(fn, 'Notification');
@@ -80,5 +81,35 @@ export const partialUpdateWidget = catchAsync(
 		let updatedNotification = await update(Widget, { _id }, data);
 		res.message = req?.i18n?.t('widget.partialUpdate');
 		return successResponse(updatedNotification, res);
+	}
+);
+
+export const getWidgetTypes = catchAsync(
+	async (req: IRequest, res: IResponse) => {
+		let widgetTypes: TypesType[] = [
+			{
+				value: Object.keys(WidgetType)[0],
+				label: Object.values(WidgetType)[0],
+			},
+		];
+		defaults.collections.forEach((item: CollectionItem) => {
+			widgetTypes.push({
+				value: item.collectionName,
+				label: item.title,
+			});
+		});
+		res.message = req?.i18n?.t('widget.getWidgetTypes');
+		return successResponse(widgetTypes, res);
+	}
+);
+
+export const getSelectionTypes = catchAsync(
+	async (req: IRequest, res: IResponse) => {
+		let selectionTypes = Object.entries(SelectionTypes).map((e) => ({
+			label: e[1],
+			value: e[0],
+		}));
+		res.message = req?.i18n?.t('widget.getSelectionTypes');
+		return successResponse(selectionTypes, res);
 	}
 );

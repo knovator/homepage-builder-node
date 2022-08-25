@@ -1,5 +1,5 @@
-import Widget, { IWidgetSchema } from './Widget';
-import Tile, { ITileSchema } from './Tile';
-import Page, { IPageSchema } from './Page';
+import Widget from './Widget';
+import Tile from './Tile';
+import Page from './Page';
 
-export { Widget, IWidgetSchema, Tile, ITileSchema, Page, IPageSchema };
+export { Widget, Tile, Page };

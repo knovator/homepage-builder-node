@@ -1,17 +1,7 @@
-import { Schema, Model, Document, Types, model } from 'mongoose';
+import { Schema, Model, Types, model } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { TileTypes } from '../enums';
 import { softDeletePlugin } from '../plugins/softDelete';
-
-export interface ITileSchema extends Document {
-	widgetId: typeof Types.ObjectId;
-	title: string;
-	altText: string;
-	link: string;
-	sequence: Number;
-	tileType: TileTypes;
-	img: any;
-}
 
 const TileSchema = new Schema<ITileSchema>({
 	widgetId: {

@@ -1,8 +1,9 @@
 import joi from 'joi';
-import { Widget, IWidgetSchema } from '../../models';
+import { Widget } from '../../models';
 import { getOne } from '../../services/dbService';
 import { VALIDATION } from '../../constants';
 import { WidgetType, SelectionTypes } from '../../../types/enums';
+import { defaults } from '../defaults';
 
 const checkUnique = async (value: string) => {
 	let result;
@@ -16,7 +17,9 @@ const checkUnique = async (value: string) => {
 		throw new Error(VALIDATION.WIDGET_EXISTS);
 	}
 };
-
+console.log(
+	...[...Object.keys(WidgetType), ...Object.keys(defaults.collections)]
+);
 export const create = joi.object<IWidgetSchema>({
 	name: joi.string().required(),
 	selectionTitle: joi.string().required(),
@@ -33,9 +36,13 @@ export const create = joi.object<IWidgetSchema>({
 	tabletPerRow: joi.number().allow(null).optional(),
 	widgetType: joi
 		.string()
-		.valid(...Object.values(WidgetType))
+		.custom((value, _helper) => {
+			if (Object.keys(WidgetType).includes(value)) {
+				return true;
+			}
+		})
 		.optional()
-		.default(WidgetType.Static),
+		.default(WidgetType.Image),
 	selectionType: joi
 		.string()
 		.valid(...Object.values(SelectionTypes))

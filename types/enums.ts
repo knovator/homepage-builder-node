@@ -1,10 +1,9 @@
 export enum WidgetType {
-	Static = 'Static',
-	Dynamic = 'Dynamic',
+	Image = 'Image',
 }
 
 export enum SelectionTypes {
-	FixedCard = 'Fixed Card',
+	FixedCard = 'FixedCard',
 	Carousel = 'Carousel',
 }
 

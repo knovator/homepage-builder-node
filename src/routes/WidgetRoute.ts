@@ -10,6 +10,9 @@ const routes: IRouter = express.Router();
 routes.use(express.json());
 
 // Widget Routes
+// Get widget types
+routes.get('/widget-types', widgetController.getWidgetTypes).descriptor('widget.getWidgetTypes');
+routes.get('/selection-types', widgetController.getSelectionTypes).descriptor('widget.getSelectionTypes');
 // Get all widgets
 routes
 	.post(`/list`, validate(widgetValidation.list), widgetController.getWidgets)

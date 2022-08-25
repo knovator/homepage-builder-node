@@ -1,20 +1,7 @@
-import { WidgetType, SelectionTypes } from '../../types/enums';
-import { Schema, Model, Document, model } from 'mongoose';
+import { Schema, Model, model } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { softDeletePlugin } from '../plugins/softDelete';
-
-export interface IWidgetSchema extends Document {
-	name: String;
-	code: String;
-	autoPlay: Boolean;
-	isActive: Boolean;
-	selectionTitle: String;
-	webPerRow: Number;
-	mobilePerRow: Number;
-	tabletPerRow: Number;
-	widgetType: WidgetType;
-	selectionType: SelectionTypes;
-}
+import { WidgetType, SelectionTypes } from '../../types/enums';
 
 const WidgetSchema = new Schema<IWidgetSchema>({
 	name: String,
@@ -34,7 +21,7 @@ const WidgetSchema = new Schema<IWidgetSchema>({
 	widgetType: {
 		type: String,
 		enum: Object.values(WidgetType),
-		default: WidgetType.Static,
+		default: WidgetType.Image,
 		required: true,
 	},
 	selectionType: {

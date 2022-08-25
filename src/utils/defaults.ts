@@ -3,7 +3,7 @@ import { IRequest } from '../../types/IRequest';
 import { IResponse } from '../../types/IResponse';
 import { RESPONSE_CODES, internalServerError, REGEXS } from '../constants';
 
-export const defaults = {
+export const defaults: iConfig = {
 	logger: console as any,
 	catchAsync:
 		(fn: any, modal: string = '') =>
@@ -21,4 +21,5 @@ export const defaults = {
 				});
 			});
 		},
+	collections: [] as CollectionItem[],
 };

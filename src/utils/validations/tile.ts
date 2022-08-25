@@ -1,5 +1,4 @@
 import joi from 'joi';
-import { ITileSchema } from '../../models';
 import { TileTypes } from '../../../types/enums';
 
 export const create = joi.object<ITileSchema>({

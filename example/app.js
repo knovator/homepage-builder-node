@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const express = require('express');
 const fileUpload = require('express-fileupload');
-const { WidgetRoutes, TileRoutes, PageRoutes } = require('../.');
+const { WidgetRoutes, TileRoutes, PageRoutes, setConfig } = require('../.');
 const fileUploadRoute = require('./src/routes/fileuploadRoute');
 const app = express();
 const PORT = 8080;
@@ -15,6 +15,13 @@ app.use(
 		createParentPath: true,
 	})
 );
+setConfig({
+	collections: [
+		{ title: 'Products', collectionName: 'products' },
+		{ title: 'Categories', collectionName: 'categories' },
+		{ title: 'Reviews', collectionName: 'reviews' },
+	],
+});
 app.get('/status', (_req, res) => {
 	res.send('All Okay');
 });

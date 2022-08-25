@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { Page, IPageSchema } from '../../models';
+import { Page } from '../../models';
 import { getOne } from '../../services/dbService';
 import { VALIDATION } from '../../constants';
 
