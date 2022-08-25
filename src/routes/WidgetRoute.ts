@@ -41,5 +41,9 @@ routes
 routes
 	.delete(`/:id`, widgetController.deleteWidget)
 	.descriptor('widget.delete');
+// Get dynamic collection data
+routes
+	.post('/collection-data', widgetController.getCollectionData)
+	.descriptor('widget.getCollectionData');
 
 export default routes;

@@ -1,4 +1,5 @@
-import { Types } from 'mongoose';
+import { Types, model, Schema } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 import { Widget } from './../models';
 import { create, remove, update, list } from '../services/dbService';
 import {
@@ -111,5 +112,41 @@ export const getSelectionTypes = catchAsync(
 		}));
 		res.message = req?.i18n?.t('widget.getSelectionTypes');
 		return successResponse(selectionTypes, res);
+	}
+);
+
+export const getCollectionData = catchAsync(
+	async (req: IRequest, res: IResponse) => {
+		const { search, collectionName } = req.body;
+		const collectionItem: CollectionItem | undefined =
+			defaults.collections.find(
+				(collection) => collection.collectionName === collectionName
+			);
+		if (!collectionItem) {
+			throw new Error(
+				`No collection is specified with ${collectionName}`
+			);
+		}
+		// setting up mongoose model
+		const tempSchema = new Schema({}, { strict: false });
+		tempSchema.plugin(mongoosePaginate);
+		let TempModel = model(collectionName, tempSchema, collectionName);
+		// fetching data
+		let query: any = collectionItem.filters || {};
+		if (search) {
+			query = {
+				...query,
+				$or: collectionItem.searchColumns.map((column) => ({
+					[column]: {
+						$regex: search,
+						$options: 'i',
+					},
+				})),
+			};
+		}
+		// @ts-ignore
+		const collectionData = await list(TempModel, query, {});
+		res.message = req?.i18n?.t('widget.getCollectionData');
+		return successResponse(collectionData, res);
 	}
 );

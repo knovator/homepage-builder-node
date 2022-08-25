@@ -1,9 +1,9 @@
 import joi from 'joi';
 import { Widget } from '../../models';
-import { getOne } from '../../services/dbService';
-import { VALIDATION } from '../../constants';
-import { WidgetType, SelectionTypes } from '../../../types/enums';
 import { defaults } from '../defaults';
+import { VALIDATION } from '../../constants';
+import { getOne } from '../../services/dbService';
+import { WidgetType, SelectionTypes } from '../../../types/enums';
 
 const checkUnique = async (value: string) => {
 	let result;
@@ -17,9 +17,7 @@ const checkUnique = async (value: string) => {
 		throw new Error(VALIDATION.WIDGET_EXISTS);
 	}
 };
-console.log(
-	...[...Object.keys(WidgetType), ...Object.keys(defaults.collections)]
-);
+
 export const create = joi.object<IWidgetSchema>({
 	name: joi.string().required(),
 	selectionTitle: joi.string().required(),
@@ -40,6 +38,13 @@ export const create = joi.object<IWidgetSchema>({
 			if (Object.keys(WidgetType).includes(value)) {
 				return true;
 			}
+			let collectionIndex = defaults.collections.findIndex(
+				(collection) => collection.collectionName === value
+			);
+			if (collectionIndex > -1) {
+				return true;
+			}
+			return false;
 		})
 		.optional()
 		.default(WidgetType.Image),
@@ -65,7 +70,7 @@ export const update = joi.object<IWidgetSchema>({
 });
 
 export const list = joi.object({
-	search: joi.string().allow('').replace(/\s+/g, '_').optional().default(''),
+	search: joi.string().allow('').optional().default(''),
 	options: joi
 		.object({
 			// sort: joi.alternatives().try(joi.object(), joi.string()).optional(),
@@ -80,4 +85,9 @@ export const list = joi.object({
 
 export const partialUpdate = joi.object({
 	isActive: joi.boolean().optional(),
+});
+
+export const getCollectionData = joi.object({
+	collectionName: joi.string().required(),
+	search: joi.string().allow('').optional().default(''),
 });

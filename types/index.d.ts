@@ -11,7 +11,12 @@ declare module '@knovator/homepage-builder-node' {
 	var setConfig: (config: Parital<iConfig>) => void;
 }
 type TypesType = { value: string; label: string };
-type CollectionItem = { title: string; collectionName: string };
+type CollectionItem = {
+	title: string;
+	collectionName: string;
+	filters?: { [key: string]: string };
+	searchColumns: string[];
+};
 interface iConfig {
 	logger: any;
 	catchAsync: (

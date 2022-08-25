@@ -17,9 +17,12 @@ app.use(
 );
 setConfig({
 	collections: [
-		{ title: 'Products', collectionName: 'products' },
-		{ title: 'Categories', collectionName: 'categories' },
-		{ title: 'Reviews', collectionName: 'reviews' },
+		{
+			title: 'Notifications',
+			collectionName: 'notifications',
+			filters: { isDeleted: false, isActive: true },
+			searchColumns: ['name', 'code'],
+		},
 	],
 });
 app.get('/status', (_req, res) => {
