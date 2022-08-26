@@ -6,11 +6,9 @@ import {
 	Document,
 	HydratedDocument,
 } from 'mongoose';
-import { IWidgetSchema, ITileSchema, IPageSchema } from '../models';
 
 type EntityType = IWidgetSchema | ITileSchema | IPageSchema;
 type ReturnDocument = EntityType & Document;
-type ReturnModal = HydratedDocument<EntityType>;
 
 // create
 export async function create<T extends EntityType>(

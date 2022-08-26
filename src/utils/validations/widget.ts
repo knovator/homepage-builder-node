@@ -1,7 +1,8 @@
 import joi from 'joi';
-import { Widget, IWidgetSchema } from '../../models';
-import { getOne } from '../../services/dbService';
+import { Widget } from '../../models';
+import { defaults } from '../defaults';
 import { VALIDATION } from '../../constants';
+import { getOne } from '../../services/dbService';
 import { WidgetType, SelectionTypes } from '../../../types/enums';
 
 const checkUnique = async (value: string) => {
@@ -31,11 +32,24 @@ export const create = joi.object<IWidgetSchema>({
 	webPerRow: joi.number().allow(null).optional(),
 	mobilePerRow: joi.number().allow(null).optional(),
 	tabletPerRow: joi.number().allow(null).optional(),
+	collectionName: joi.string().optional(),
+	collectionItems: joi.array().items(joi.string()).optional(),
 	widgetType: joi
 		.string()
-		.valid(...Object.values(WidgetType))
+		.custom((value, _helper) => {
+			if (Object.keys(WidgetType).includes(value)) {
+				return value;
+			}
+			let collectionIndex = defaults.collections.findIndex(
+				(collection) => collection.collectionName === value
+			);
+			if (collectionIndex > -1) {
+				return value;
+			}
+			throw new Error(`${value} is not a valid widget type`);
+		})
 		.optional()
-		.default(WidgetType.Static),
+		.default(WidgetType.Image),
 	selectionType: joi
 		.string()
 		.valid(...Object.values(SelectionTypes))
@@ -51,6 +65,7 @@ export const update = joi.object<IWidgetSchema>({
 	mobilePerRow: joi.number().allow(null).optional(),
 	tabletPerRow: joi.number().allow(null).optional(),
 	autoPlay: joi.boolean().default(false).optional(),
+	collectionItems: joi.array().items(joi.string()).optional(),
 	selectionType: joi
 		.string()
 		.valid(...Object.values(SelectionTypes))
@@ -58,7 +73,7 @@ export const update = joi.object<IWidgetSchema>({
 });
 
 export const list = joi.object({
-	search: joi.string().allow('').replace(/\s+/g, '_').optional().default(''),
+	search: joi.string().allow('').optional().default(''),
 	options: joi
 		.object({
 			// sort: joi.alternatives().try(joi.object(), joi.string()).optional(),
@@ -73,4 +88,9 @@ export const list = joi.object({
 
 export const partialUpdate = joi.object({
 	isActive: joi.boolean().optional(),
+});
+
+export const getCollectionData = joi.object({
+	collectionName: joi.string().required(),
+	search: joi.string().allow('').optional().default(''),
 });

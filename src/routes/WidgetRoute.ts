@@ -10,6 +10,10 @@ const routes: IRouter = express.Router();
 routes.use(express.json());
 
 // Widget Routes
+// Get widget types
+routes.get('/widget-types', widgetController.getWidgetTypes).descriptor('widget.getWidgetTypes');
+// Get widget selection types
+routes.get('/selection-types', widgetController.getSelectionTypes).descriptor('widget.getSelectionTypes');
 // Get all widgets
 routes
 	.post(`/list`, validate(widgetValidation.list), widgetController.getWidgets)
@@ -38,5 +42,13 @@ routes
 routes
 	.delete(`/:id`, widgetController.deleteWidget)
 	.descriptor('widget.delete');
+// Get dynamic collection data
+routes
+	.post(
+		'/collection-data',
+		validate(widgetValidation.getCollectionData),
+		widgetController.getCollectionData
+	)
+	.descriptor('widget.getCollectionData');
 
 export default routes;

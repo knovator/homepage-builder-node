@@ -1,12 +1,6 @@
-import { Schema, Model, Document, model, Types } from 'mongoose';
+import { Schema, Model, model, Types } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { softDeletePlugin } from '../plugins/softDelete';
-
-export interface IPageSchema extends Document {
-	name: String;
-	code: String;
-	widgets: String[];
-}
 
 const PageSchema = new Schema<IPageSchema>({
 	name: String,

@@ -1,3 +1,4 @@
 node_modules
 .env*
-!*/public/uploads/temp/img-large.jpg
+public/uploads/temp/*
+!public/uploads/temp/img-large.jpg
