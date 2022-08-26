@@ -1,4 +1,4 @@
-import { Schema, Model, model } from 'mongoose';
+import { Schema, Model, model, Types } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { softDeletePlugin } from '../plugins/softDelete';
 import { WidgetType, SelectionTypes } from '../../types/enums';
@@ -18,9 +18,10 @@ const WidgetSchema = new Schema<IWidgetSchema>({
 	webPerRow: Number,
 	mobilePerRow: Number,
 	tabletPerRow: Number,
+	collectionName: String,
+	collectionItems: [{ type: Types.ObjectId, refPath: 'collectionName' }],
 	widgetType: {
 		type: String,
-		enum: Object.values(WidgetType),
 		default: WidgetType.Image,
 		required: true,
 	},

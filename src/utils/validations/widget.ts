@@ -32,19 +32,21 @@ export const create = joi.object<IWidgetSchema>({
 	webPerRow: joi.number().allow(null).optional(),
 	mobilePerRow: joi.number().allow(null).optional(),
 	tabletPerRow: joi.number().allow(null).optional(),
+	collectionName: joi.string().optional(),
+	collectionItems: joi.array().items(joi.string()).optional(),
 	widgetType: joi
 		.string()
 		.custom((value, _helper) => {
 			if (Object.keys(WidgetType).includes(value)) {
-				return true;
+				return value;
 			}
 			let collectionIndex = defaults.collections.findIndex(
 				(collection) => collection.collectionName === value
 			);
 			if (collectionIndex > -1) {
-				return true;
+				return value;
 			}
-			return false;
+			throw new Error(`${value} is not a valid widget type`);
 		})
 		.optional()
 		.default(WidgetType.Image),
@@ -63,6 +65,7 @@ export const update = joi.object<IWidgetSchema>({
 	mobilePerRow: joi.number().allow(null).optional(),
 	tabletPerRow: joi.number().allow(null).optional(),
 	autoPlay: joi.boolean().default(false).optional(),
+	collectionItems: joi.array().items(joi.string()).optional(),
 	selectionType: joi
 		.string()
 		.valid(...Object.values(SelectionTypes))

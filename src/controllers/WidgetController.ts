@@ -1,4 +1,4 @@
-import { Types, model, Schema } from 'mongoose';
+import { Types, model, Schema, models } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { Widget } from './../models';
 import { create, remove, update, list } from '../services/dbService';
@@ -128,9 +128,12 @@ export const getCollectionData = catchAsync(
 			);
 		}
 		// setting up mongoose model
-		const tempSchema = new Schema({}, { strict: false });
-		tempSchema.plugin(mongoosePaginate);
-		let TempModel = model(collectionName, tempSchema, collectionName);
+		let TempModel = models[collectionName];
+		if (!TempModel) {
+			const tempSchema = new Schema({}, { strict: false });
+			tempSchema.plugin(mongoosePaginate);
+			TempModel = model(collectionName, tempSchema);
+		}
 		// fetching data
 		let query: any = collectionItem.filters || {};
 		if (search) {

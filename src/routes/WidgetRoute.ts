@@ -12,6 +12,7 @@ routes.use(express.json());
 // Widget Routes
 // Get widget types
 routes.get('/widget-types', widgetController.getWidgetTypes).descriptor('widget.getWidgetTypes');
+// Get widget selection types
 routes.get('/selection-types', widgetController.getSelectionTypes).descriptor('widget.getSelectionTypes');
 // Get all widgets
 routes
@@ -43,7 +44,11 @@ routes
 	.descriptor('widget.delete');
 // Get dynamic collection data
 routes
-	.post('/collection-data', widgetController.getCollectionData)
+	.post(
+		'/collection-data',
+		validate(widgetValidation.getCollectionData),
+		widgetController.getCollectionData
+	)
 	.descriptor('widget.getCollectionData');
 
 export default routes;

@@ -41,6 +41,8 @@ interface IWidgetSchema extends import('mongoose').Document {
 	tabletPerRow: Number;
 	widgetType: WidgetType;
 	selectionType: SelectionTypes;
+	collectionName: String;
+	collectionItems: String[];
 }
 interface ITileSchema extends import('mongoose').Document {
 	widgetId: typeof Types.ObjectId;
